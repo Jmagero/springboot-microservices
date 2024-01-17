@@ -1,0 +1,41 @@
+server:
+  port: 9090
+spring:
+  application:
+    name: ApiGateway
+  config:
+    import: configserver:http://localhost:9296
+
+  cloud:
+    gateway:
+      routes:
+        - id: ProductService
+          uri: lb://PaymentService
+          predicates:
+            - Path=/products/**
+        - id: OrderService
+          uri: lb://OrderService
+          predicates:
+            - Path=/orders/**
+        - id: PaymentService
+          uri: lb://PaymentService
+          predicates:
+            - Path=/payments/**
+
+
+#            filters:
+#              - name: CircuitBreaker
+#                args:
+#                  name: ProductService
+#                  fallbackUri: forward:/productServiceFallBack
+okta:
+  oauth2:
+    issuer: https://dev-62790539.okta.com/oauth2/default
+    audience: api://default
+    client-id: 0oaebt8ygwbHuMrSO5d7
+    client-secret: 1QywNvdAJUnJuV51JeObzdYDkeB9b-5S3KfirQyyF1B_fFH79j7xQ2Fsry09eczb
+    scopes: openid, profile, email, offline_access
+
+
+
+
