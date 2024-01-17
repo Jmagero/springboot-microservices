@@ -1,0 +1,22 @@
+server:
+  port: 9296
+spring:
+  application:
+    name: CONFIG-SERVER
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/Jmagero/spring-config-server.git
+          clone-on-start: true
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_SERVER_ADDRESS:http://localhost:8761/eureka}
+    fetch-registry: true
+    register-with-eureka: true
+  instance:
+    preferIpAddress: true
+    hostname: localhost
+
