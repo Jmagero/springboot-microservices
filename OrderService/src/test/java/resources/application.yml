@@ -1,0 +1,51 @@
+server:
+  port: 8083
+spring:
+  application:
+    name: OrderService
+  datasource:
+    url: jdbc:h2:mem:order
+    password: john16;13
+    username: root
+    driverClassName: com.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    generate-ddl: true
+    show-sql: false
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        globally_quoted_indentifiers: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+
+  config:
+    import: optional:configserver:http://localhost:9296
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://dev-62790539.okta.com/oauth2/default
+      client:
+        registration:
+          internal-client:
+            provider: okta
+            authorization-grant-type: client_credentials
+            scope: internal
+            client-id: 0oaebt8ygwbHuMrSO5d7
+            client-secret: 1QywNvdAJUnJuV51JeObzdYDkeB9b-5S3KfirQyyF1B_fFH79j7xQ2Fsry09eczb
+        provider:
+          okta:
+            issuer-uri: https://dev-62790539.okta.com/oauth2/default
+
+  eureka:
+    client:
+      enabled: false
+
+
+#  management:
+#    tracing:
+#      sampling:
+#        probability: 1.0
+
